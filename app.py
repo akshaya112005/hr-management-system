@@ -8,7 +8,7 @@ app = Flask(__name__)
 UPLOAD_FOLDER = "resumes"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# ✅ Extract text
+
 def extract_text(file):
     filename = file.filename.lower()
 
@@ -31,7 +31,7 @@ def extract_text(file):
 
     return ""
 
-# ✅ Extract Candidate Name
+
 def extract_name(text):
     lines = text.strip().split("\n")
 
@@ -43,7 +43,7 @@ def extract_name(text):
 
     return "Unknown Candidate"
 
-# ✅ CGPA extraction
+
 def extract_cgpa(text):
     text = text.lower()
 
@@ -65,7 +65,7 @@ def extract_cgpa(text):
 
     return 0
 
-# ✅ Skill matching
+
 def match_skills(text, keywords):
     text = text.lower()
     return [k for k in keywords if k in text]
@@ -109,7 +109,7 @@ def index():
                 if not file or file.filename == "":
                     continue
 
-                # ✅ Allow only txt/pdf
+               
                 if not (file.filename.endswith(".txt") or file.filename.endswith(".pdf")):
                     continue
 
@@ -124,7 +124,7 @@ def index():
 
                 score = int((len(skills) / len(keywords)) * 100) if keywords else 0
 
-                # ✅ Selection logic
+                
                 if (score >= 40 and cgpa >= min_cgpa) or score >= 70:
                     status = "Selected ✅"
                 else:
@@ -140,7 +140,7 @@ def index():
                     "status": status
                 })
 
-            # ✅ Sort by score (best first)
+           
             results = sorted(results, key=lambda x: x["score"], reverse=True)
 
     return render_template(
